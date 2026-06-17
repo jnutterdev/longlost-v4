@@ -1,0 +1,85 @@
+---
+interface Props {
+  title: string;
+  slug: string;
+  date: string;
+  excerpt?: string;
+  tags?: string[];
+}
+
+const { title, slug, date, excerpt, tags = [] } = Astro.props;
+
+const formatted = new Date(date).toLocaleDateString('en-US', {
+  month: 'short',
+  year: 'numeric',
+});
+---
+
+<li class="post-item">
+  <span class="post-date">{formatted}</span>
+  <div class="post-body">
+    <a href={`/posts/${slug}`} class="post-title">{title}</a>
+    {excerpt && <p class="post-excerpt">{excerpt}</p>}
+    {tags.length > 0 && (
+      <div class="post-tags" aria-label="Tags">
+        {tags.map(tag => (
+          <span class="post-tag">{tag}</span>
+        ))}
+      </div>
+    )}
+  </div>
+</li>
+
+<style>
+  .post-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0 1.25rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--surface0);
+  }
+
+  .post-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--overlay0);
+    padding-top: 3px;
+    letter-spacing: 0.02em;
+  }
+
+  .post-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .post-title:hover {
+    color: var(--lavender);
+  }
+
+  .post-excerpt {
+    font-size: 13px;
+    color: var(--subtext0);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .post-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--mauve);
+    background: rgba(203, 166, 247, 0.08);
+    border: 1px solid rgba(203, 166, 247, 0.2);
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+</style>

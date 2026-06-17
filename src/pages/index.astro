@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts');
+const posts = allPosts
+  .filter(p => !p.data.draft)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 5);
+---
+
+<Base>
+  <section class="intro">
+    <p class="tagline">signal recovered · transmission log</p>
+    <h1 class="headline">long lost: the terrible inconvenience of<br />remembering things on the internet.</h1>
+    <p class="desc">a personal log. irregular transmission. thoughts on making things, breaking things, and whatever is stuck in my head this week.</p>
+  </section>
+
+  <SectionLabel label="recent posts" />
+
+  <ul class="post-list" aria-label="Recent posts">
+    {posts.map(post => (
+      <PostCard
+        title={post.data.title}
+        slug={post.slug}
+        date={post.data.date}
+        excerpt={post.data.excerpt}
+        tags={post.data.tags}
+      />
+    ))}
+  </ul>
+
+  <a href="/archive" class="archive-link">view full archive →</a>
+</Base>
+
+<style>
+  .intro {
+    margin-bottom: 3rem;
+  }
+
+  .tagline {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--overlay1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .headline {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+  }
+
+  .desc {
+    font-size: 14px;
+    color: var(--subtext0);
+    max-width: 480px;
+  }
+
+  .post-list {
+    list-style: none;
+    margin-bottom: 2rem;
+  }
+
+  .post-list > :global(li:first-child) {
+    border-top: 1px solid var(--surface0);
+  }
+
+  .archive-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--overlay1);
+    text-decoration: none;
+  }
+
+  .archive-link:hover {
+    color: var(--subtext0);
+  }
+</style>

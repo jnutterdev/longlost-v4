@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts');
+const posts = allPosts
+  .filter(p => !p.data.draft)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const byYear = posts.reduce<Record<string, typeof posts>>((acc, post) => {
+  const year = new Date(post.data.date).getFullYear().toString();
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(post);
+  return acc;
+}, {});
+
+const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
+---
+
+<Base title="archive">
+  <SectionLabel label="all posts" />
+
+  {years.map(year => (
+    <section class="year-group">
+      <p class="year-label">{year}</p>
+      <ul class="archive-list" aria-label={`Posts from ${year}`}>
+        {byYear[year].map(post => {
+          const d = new Date(post.data.date);
+          const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: '2-digit' }).toLowerCase();
+          const primaryTag = post.data.tags?.[0];
+          return (
+            <li class="archive-row">
+              <span class="archive-date">{dateStr}</span>
+              <a href={`/posts/${post.slug}`} class="archive-title">{post.data.title}</a>
+              {primaryTag && <span class="archive-tag">{primaryTag}</span>}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+</Base>
+
+<style>
+  .year-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .year-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--overlay1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 1.75rem 0 0.75rem;
+  }
+
+  .archive-list {
+    list-style: none;
+  }
+
+  .archive-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--surface0);
+  }
+
+  .archive-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--overlay0);
+    min-width: 56px;
+    flex-shrink: 0;
+  }
+
+  .archive-title {
+    font-size: 14px;
+    color: var(--subtext1);
+    text-decoration: none;
+    flex: 1;
+  }
+
+  .archive-title:hover {
+    color: var(--lavender);
+  }
+
+  .archive-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--overlay1);
+    flex-shrink: 0;
+  }
+</style>

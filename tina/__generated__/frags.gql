@@ -1,0 +1,24 @@
+fragment AboutParts on About {
+  __typename
+  avatar
+  avatarAlt
+  name
+  handle
+  location
+  bio
+  links {
+    __typename
+    label
+    url
+  }
+}
+
+fragment PostsParts on Posts {
+  __typename
+  title
+  date
+  excerpt
+  tags
+  draft
+  body
+}
