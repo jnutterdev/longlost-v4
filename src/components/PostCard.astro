@@ -4,10 +4,10 @@ interface Props {
   slug: string;
   date: string;
   excerpt?: string;
-  tags?: string[];
+  tag?: string;
 }
 
-const { title, slug, date, excerpt, tags = [] } = Astro.props;
+const { title, slug, date, excerpt, tag } = Astro.props;
 
 const formatted = new Date(date).toLocaleDateString('en-US', {
   month: 'short',
@@ -20,11 +20,9 @@ const formatted = new Date(date).toLocaleDateString('en-US', {
   <div class="post-body">
     <a href={`/posts/${slug}`} class="post-title">{title}</a>
     {excerpt && <p class="post-excerpt">{excerpt}</p>}
-    {tags.length > 0 && (
+    {tag && (
       <div class="post-tags" aria-label="Tags">
-        {tags.map(tag => (
-          <span class="post-tag">{tag}</span>
-        ))}
+        <span class="post-tag">{tag}</span>
       </div>
     )}
   </div>

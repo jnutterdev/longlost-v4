@@ -91,15 +91,34 @@ export default defineConfig({
             },
           },
           {
-            name: 'tags',
-            label: 'Tags',
+            name: 'tag',
+            label: 'Tag',
             type: 'string',
-            list: true,
+          },
+          {
+            name: 'readTime',
+            label: 'Read Time',
+            type: 'string',
+          },
+          {
+            name: 'image',
+            label: 'Image',
+            type: 'image',
+          },
+          {
+            name: 'featured',
+            label: 'Featured',
+            type: 'boolean',
           },
           {
             name: 'draft',
             label: 'Draft',
             type: 'boolean',
+          },
+          {
+            name: 'discussionUrl',
+            label: 'Discussion URL',
+            type: 'string',
           },
           {
             name: 'body',
