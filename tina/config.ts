@@ -152,6 +152,16 @@ export default defineConfig({
             type: 'string',
           },
           {
+            name: 'currentMusic',
+            label: 'Current Music',
+            type: 'string',
+          },
+          {
+            name: 'currentMood',
+            label: 'Current Mood',
+            type: 'string',
+          },
+          {
             name: 'body',
             label: 'Body',
             type: 'rich-text',

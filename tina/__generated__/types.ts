@@ -309,6 +309,8 @@ export type Posts = Node & Document & {
   featured?: Maybe<Scalars['Boolean']['output']>;
   draft?: Maybe<Scalars['Boolean']['output']>;
   discussionUrl?: Maybe<Scalars['String']['output']>;
+  currentMusic?: Maybe<Scalars['String']['output']>;
+  currentMood?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['JSON']['output']>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
@@ -338,6 +340,8 @@ export type PostsFilter = {
   featured?: InputMaybe<BooleanFilter>;
   draft?: InputMaybe<BooleanFilter>;
   discussionUrl?: InputMaybe<StringFilter>;
+  currentMusic?: InputMaybe<StringFilter>;
+  currentMood?: InputMaybe<StringFilter>;
   body?: InputMaybe<RichTextFilter>;
 };
 
@@ -482,6 +486,8 @@ export type PostsMutation = {
   featured?: InputMaybe<Scalars['Boolean']['input']>;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   discussionUrl?: InputMaybe<Scalars['String']['input']>;
+  currentMusic?: InputMaybe<Scalars['String']['input']>;
+  currentMood?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
@@ -489,7 +495,7 @@ export type HomePartsFragment = { __typename: 'Home', tagline?: string | null, h
 
 export type AboutPartsFragment = { __typename: 'About', avatar?: string | null, avatarAlt?: string | null, name: string, handle?: string | null, location?: string | null, bio?: any | null, links?: Array<{ __typename: 'AboutLinks', label?: string | null, url?: string | null } | null> | null };
 
-export type PostsPartsFragment = { __typename: 'Posts', title: string, date: string, excerpt?: string | null, tag?: Array<string | null> | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, body?: any | null };
+export type PostsPartsFragment = { __typename: 'Posts', title: string, date: string, excerpt?: string | null, tag?: Array<string | null> | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, currentMusic?: string | null, currentMood?: string | null, body?: any | null };
 
 export type HomeQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -534,7 +540,7 @@ export type PostsQueryVariables = Exact<{
 }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: { __typename: 'Posts', id: string, title: string, date: string, excerpt?: string | null, tag?: Array<string | null> | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type PostsQuery = { __typename?: 'Query', posts: { __typename: 'Posts', id: string, title: string, date: string, excerpt?: string | null, tag?: Array<string | null> | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, currentMusic?: string | null, currentMood?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
 
 export type PostsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -546,7 +552,7 @@ export type PostsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PostsConnectionQuery = { __typename?: 'Query', postsConnection: { __typename?: 'PostsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PostsConnectionEdges', cursor: string, node?: { __typename: 'Posts', id: string, title: string, date: string, excerpt?: string | null, tag?: Array<string | null> | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type PostsConnectionQuery = { __typename?: 'Query', postsConnection: { __typename?: 'PostsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PostsConnectionEdges', cursor: string, node?: { __typename: 'Posts', id: string, title: string, date: string, excerpt?: string | null, tag?: Array<string | null> | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, currentMusic?: string | null, currentMood?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export const HomePartsFragmentDoc = gql`
     fragment HomeParts on Home {
@@ -584,6 +590,8 @@ export const PostsPartsFragmentDoc = gql`
   featured
   draft
   discussionUrl
+  currentMusic
+  currentMood
   body
 }
     `;

@@ -41,6 +41,8 @@ export const PostsPartsFragmentDoc = gql`
   featured
   draft
   discussionUrl
+  currentMusic
+  currentMood
   body
 }
     `;

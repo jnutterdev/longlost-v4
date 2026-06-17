@@ -193,6 +193,8 @@ type Posts implements Node & Document {
   featured: Boolean
   draft: Boolean
   discussionUrl: String
+  currentMusic: String
+  currentMood: String
   body: JSON
   id: ID!
   _sys: SystemInfo!
@@ -222,6 +224,8 @@ input PostsFilter {
   featured: BooleanFilter
   draft: BooleanFilter
   discussionUrl: StringFilter
+  currentMusic: StringFilter
+  currentMood: StringFilter
   body: RichTextFilter
 }
 
@@ -294,6 +298,8 @@ input PostsMutation {
   featured: Boolean
   draft: Boolean
   discussionUrl: String
+  currentMusic: String
+  currentMood: String
   body: JSON
 }
 
