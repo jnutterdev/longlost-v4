@@ -20,6 +20,36 @@ export default defineConfig({
   schema: {
     collections: [
       {
+        name: 'home',
+        label: 'Home',
+        path: 'src/content',
+        match: { include: 'home' },
+        format: 'json',
+        ui: {
+          allowedActions: { create: false, delete: false },
+          router: () => '/',
+        },
+        fields: [
+          {
+            name: 'tagline',
+            label: 'Tagline',
+            type: 'string',
+          },
+          {
+            name: 'headline',
+            label: 'Headline',
+            type: 'string',
+            ui: { component: 'textarea' },
+          },
+          {
+            name: 'desc',
+            label: 'Description',
+            type: 'string',
+            ui: { component: 'textarea' },
+          },
+        ],
+      },
+      {
         name: 'about',
         label: 'About',
         path: 'src/content',
@@ -92,8 +122,9 @@ export default defineConfig({
           },
           {
             name: 'tag',
-            label: 'Tag',
+            label: 'Tags',
             type: 'string',
+            list: true,
           },
           {
             name: 'readTime',

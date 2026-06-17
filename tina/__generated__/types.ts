@@ -82,6 +82,8 @@ export type Query = {
   collections: Array<Collection>;
   node: Node;
   document: DocumentNode;
+  home: Home;
+  homeConnection: HomeConnection;
   about: About;
   aboutConnection: AboutConnection;
   posts: Posts;
@@ -107,6 +109,21 @@ export type QueryNodeArgs = {
 export type QueryDocumentArgs = {
   collection?: InputMaybe<Scalars['String']['input']>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryHomeArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryHomeConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<HomeFilter>;
 };
 
 
@@ -140,6 +157,7 @@ export type QueryPostsConnectionArgs = {
 };
 
 export type DocumentFilter = {
+  home?: InputMaybe<HomeFilter>;
   about?: InputMaybe<AboutFilter>;
   posts?: InputMaybe<PostsFilter>;
 };
@@ -181,7 +199,43 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = About | Posts | Folder;
+export type DocumentNode = Home | About | Posts | Folder;
+
+export type Home = Node & Document & {
+  __typename?: 'Home';
+  tagline?: Maybe<Scalars['String']['output']>;
+  headline?: Maybe<Scalars['String']['output']>;
+  desc?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type StringFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type HomeFilter = {
+  tagline?: InputMaybe<StringFilter>;
+  headline?: InputMaybe<StringFilter>;
+  desc?: InputMaybe<StringFilter>;
+};
+
+export type HomeConnectionEdges = {
+  __typename?: 'HomeConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Home>;
+};
+
+export type HomeConnection = Connection & {
+  __typename?: 'HomeConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<HomeConnectionEdges>>>;
+};
 
 export type AboutLinks = {
   __typename?: 'AboutLinks';
@@ -204,13 +258,6 @@ export type About = Node & Document & {
 };
 
 export type ImageFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type StringFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
   eq?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -256,7 +303,7 @@ export type Posts = Node & Document & {
   title: Scalars['String']['output'];
   date: Scalars['String']['output'];
   excerpt?: Maybe<Scalars['String']['output']>;
-  tag?: Maybe<Scalars['String']['output']>;
+  tag?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   readTime?: Maybe<Scalars['String']['output']>;
   image?: Maybe<Scalars['String']['output']>;
   featured?: Maybe<Scalars['Boolean']['output']>;
@@ -314,6 +361,8 @@ export type Mutation = {
   deleteDocument: DocumentNode;
   createDocument: DocumentNode;
   createFolder: DocumentNode;
+  updateHome: Home;
+  createHome: Home;
   updateAbout: About;
   createAbout: About;
   updatePosts: Posts;
@@ -354,6 +403,18 @@ export type MutationCreateFolderArgs = {
 };
 
 
+export type MutationUpdateHomeArgs = {
+  relativePath: Scalars['String']['input'];
+  params: HomeMutation;
+};
+
+
+export type MutationCreateHomeArgs = {
+  relativePath: Scalars['String']['input'];
+  params: HomeMutation;
+};
+
+
 export type MutationUpdateAboutArgs = {
   relativePath: Scalars['String']['input'];
   params: AboutMutation;
@@ -378,14 +439,22 @@ export type MutationCreatePostsArgs = {
 };
 
 export type DocumentUpdateMutation = {
+  home?: InputMaybe<HomeMutation>;
   about?: InputMaybe<AboutMutation>;
   posts?: InputMaybe<PostsMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DocumentMutation = {
+  home?: InputMaybe<HomeMutation>;
   about?: InputMaybe<AboutMutation>;
   posts?: InputMaybe<PostsMutation>;
+};
+
+export type HomeMutation = {
+  tagline?: InputMaybe<Scalars['String']['input']>;
+  headline?: InputMaybe<Scalars['String']['input']>;
+  desc?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AboutLinksMutation = {
@@ -407,7 +476,7 @@ export type PostsMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   date?: InputMaybe<Scalars['String']['input']>;
   excerpt?: InputMaybe<Scalars['String']['input']>;
-  tag?: InputMaybe<Scalars['String']['input']>;
+  tag?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   readTime?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   featured?: InputMaybe<Scalars['Boolean']['input']>;
@@ -416,9 +485,30 @@ export type PostsMutation = {
   body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
+export type HomePartsFragment = { __typename: 'Home', tagline?: string | null, headline?: string | null, desc?: string | null };
+
 export type AboutPartsFragment = { __typename: 'About', avatar?: string | null, avatarAlt?: string | null, name: string, handle?: string | null, location?: string | null, bio?: any | null, links?: Array<{ __typename: 'AboutLinks', label?: string | null, url?: string | null } | null> | null };
 
-export type PostsPartsFragment = { __typename: 'Posts', title: string, date: string, excerpt?: string | null, tag?: string | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, body?: any | null };
+export type PostsPartsFragment = { __typename: 'Posts', title: string, date: string, excerpt?: string | null, tag?: Array<string | null> | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, body?: any | null };
+
+export type HomeQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type HomeQuery = { __typename?: 'Query', home: { __typename: 'Home', id: string, tagline?: string | null, headline?: string | null, desc?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type HomeConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<HomeFilter>;
+}>;
+
+
+export type HomeConnectionQuery = { __typename?: 'Query', homeConnection: { __typename?: 'HomeConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HomeConnectionEdges', cursor: string, node?: { __typename: 'Home', id: string, tagline?: string | null, headline?: string | null, desc?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type AboutQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -444,7 +534,7 @@ export type PostsQueryVariables = Exact<{
 }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: { __typename: 'Posts', id: string, title: string, date: string, excerpt?: string | null, tag?: string | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type PostsQuery = { __typename?: 'Query', posts: { __typename: 'Posts', id: string, title: string, date: string, excerpt?: string | null, tag?: Array<string | null> | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
 
 export type PostsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -456,8 +546,16 @@ export type PostsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PostsConnectionQuery = { __typename?: 'Query', postsConnection: { __typename?: 'PostsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PostsConnectionEdges', cursor: string, node?: { __typename: 'Posts', id: string, title: string, date: string, excerpt?: string | null, tag?: string | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type PostsConnectionQuery = { __typename?: 'Query', postsConnection: { __typename?: 'PostsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PostsConnectionEdges', cursor: string, node?: { __typename: 'Posts', id: string, title: string, date: string, excerpt?: string | null, tag?: Array<string | null> | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, discussionUrl?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
+export const HomePartsFragmentDoc = gql`
+    fragment HomeParts on Home {
+  __typename
+  tagline
+  headline
+  desc
+}
+    `;
 export const AboutPartsFragmentDoc = gql`
     fragment AboutParts on About {
   __typename
@@ -489,6 +587,63 @@ export const PostsPartsFragmentDoc = gql`
   body
 }
     `;
+export const HomeDocument = gql`
+    query home($relativePath: String!) {
+  home(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...HomeParts
+  }
+}
+    ${HomePartsFragmentDoc}`;
+export const HomeConnectionDocument = gql`
+    query homeConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: HomeFilter) {
+  homeConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...HomeParts
+      }
+    }
+  }
+}
+    ${HomePartsFragmentDoc}`;
 export const AboutDocument = gql`
     query about($relativePath: String!) {
   about(relativePath: $relativePath) {
@@ -606,7 +761,13 @@ export const PostsConnectionDocument = gql`
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
-      about(variables: AboutQueryVariables, options?: C): Promise<{data: AboutQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: AboutQueryVariables, query: string}> {
+      home(variables: HomeQueryVariables, options?: C): Promise<{data: HomeQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HomeQueryVariables, query: string}> {
+        return requester<{data: HomeQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HomeQueryVariables, query: string}, HomeQueryVariables>(HomeDocument, variables, options);
+      },
+    homeConnection(variables?: HomeConnectionQueryVariables, options?: C): Promise<{data: HomeConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HomeConnectionQueryVariables, query: string}> {
+        return requester<{data: HomeConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HomeConnectionQueryVariables, query: string}, HomeConnectionQueryVariables>(HomeConnectionDocument, variables, options);
+      },
+    about(variables: AboutQueryVariables, options?: C): Promise<{data: AboutQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: AboutQueryVariables, query: string}> {
         return requester<{data: AboutQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: AboutQueryVariables, query: string}, AboutQueryVariables>(AboutDocument, variables, options);
       },
     aboutConnection(variables?: AboutConnectionQueryVariables, options?: C): Promise<{data: AboutConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: AboutConnectionQueryVariables, query: string}> {

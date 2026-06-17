@@ -1,3 +1,10 @@
+fragment HomeParts on Home {
+  __typename
+  tagline
+  headline
+  desc
+}
+
 fragment AboutParts on About {
   __typename
   avatar

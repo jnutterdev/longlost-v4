@@ -5,6 +5,14 @@ export function gql(strings, ...args) {
   });
   return str;
 }
+export const HomePartsFragmentDoc = gql`
+    fragment HomeParts on Home {
+  __typename
+  tagline
+  headline
+  desc
+}
+    `;
 export const AboutPartsFragmentDoc = gql`
     fragment AboutParts on About {
   __typename
@@ -36,6 +44,63 @@ export const PostsPartsFragmentDoc = gql`
   body
 }
     `;
+export const HomeDocument = gql`
+    query home($relativePath: String!) {
+  home(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...HomeParts
+  }
+}
+    ${HomePartsFragmentDoc}`;
+export const HomeConnectionDocument = gql`
+    query homeConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: HomeFilter) {
+  homeConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...HomeParts
+      }
+    }
+  }
+}
+    ${HomePartsFragmentDoc}`;
 export const AboutDocument = gql`
     query about($relativePath: String!) {
   about(relativePath: $relativePath) {
@@ -152,6 +217,12 @@ export const PostsConnectionDocument = gql`
     ${PostsPartsFragmentDoc}`;
 export function getSdk(requester) {
   return {
+    home(variables, options) {
+      return requester(HomeDocument, variables, options);
+    },
+    homeConnection(variables, options) {
+      return requester(HomeConnectionDocument, variables, options);
+    },
     about(variables, options) {
       return requester(AboutDocument, variables, options);
     },
