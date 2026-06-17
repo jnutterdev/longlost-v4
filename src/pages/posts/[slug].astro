@@ -29,7 +29,9 @@ const formatted = new Date(post.data.date).toLocaleDateString('en-US', {
         {post.data.tag && (
           <>
             <span class="meta-sep">·</span>
-            <span class="post-tag">{post.data.tag}</span>
+            {(Array.isArray(post.data.tag) ? post.data.tag : [post.data.tag]).map(t => (
+              <span class="post-tag">{t}</span>
+            ))}
           </>
         )}
       </p>
@@ -40,6 +42,26 @@ const formatted = new Date(post.data.date).toLocaleDateString('en-US', {
     <div class="post-body">
       <Content />
     </div>
+
+    {(post.data.blueskyUrl || post.data.mastodonUrl) && (
+      <aside class="discussion">
+        <p class="discussion-label">join the discussion</p>
+        <div class="discussion-links">
+          {post.data.blueskyUrl && (
+            <a href={post.data.blueskyUrl} target="_blank" rel="noopener noreferrer" class="discussion-link">
+              <i class="fa-brands fa-bluesky"></i>
+              <span>bluesky</span>
+            </a>
+          )}
+          {post.data.mastodonUrl && (
+            <a href={post.data.mastodonUrl} target="_blank" rel="noopener noreferrer" class="discussion-link">
+              <i class="fa-brands fa-mastodon"></i>
+              <span>mastodon</span>
+            </a>
+          )}
+        </div>
+      </aside>
+    )}
 
     <footer class="post-footer">
       <a href="/archive" class="back-link">← archive</a>
@@ -184,8 +206,46 @@ const formatted = new Date(post.data.date).toLocaleDateString('en-US', {
     margin: 2rem 0;
   }
 
-  .post-footer {
+  .discussion {
     margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--surface0);
+  }
+
+  .discussion-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--overlay0);
+    letter-spacing: 0.05em;
+    text-transform: lowercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .discussion-links {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .discussion-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--subtext0);
+    text-decoration: none;
+  }
+
+  .discussion-link i {
+    font-size: 14px;
+  }
+
+  .discussion-link:hover {
+    color: var(--lavender);
+  }
+
+  .post-footer {
+    margin-top: 2rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--surface0);
   }

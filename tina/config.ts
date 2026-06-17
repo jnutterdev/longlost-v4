@@ -147,8 +147,13 @@ export default defineConfig({
             type: 'boolean',
           },
           {
-            name: 'discussionUrl',
-            label: 'Discussion URL',
+            name: 'blueskyUrl',
+            label: 'Bluesky URL',
+            type: 'string',
+          },
+          {
+            name: 'mastodonUrl',
+            label: 'Mastodon URL',
             type: 'string',
           },
           {

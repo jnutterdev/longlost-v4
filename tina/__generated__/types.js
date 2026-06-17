@@ -40,7 +40,8 @@ export const PostsPartsFragmentDoc = gql`
   image
   featured
   draft
-  discussionUrl
+  blueskyUrl
+  mastodonUrl
   currentMusic
   currentMood
   body

@@ -192,7 +192,8 @@ type Posts implements Node & Document {
   image: String
   featured: Boolean
   draft: Boolean
-  discussionUrl: String
+  blueskyUrl: String
+  mastodonUrl: String
   currentMusic: String
   currentMood: String
   body: JSON
@@ -223,7 +224,8 @@ input PostsFilter {
   image: ImageFilter
   featured: BooleanFilter
   draft: BooleanFilter
-  discussionUrl: StringFilter
+  blueskyUrl: StringFilter
+  mastodonUrl: StringFilter
   currentMusic: StringFilter
   currentMood: StringFilter
   body: RichTextFilter
@@ -297,7 +299,8 @@ input PostsMutation {
   image: String
   featured: Boolean
   draft: Boolean
-  discussionUrl: String
+  blueskyUrl: String
+  mastodonUrl: String
   currentMusic: String
   currentMood: String
   body: JSON

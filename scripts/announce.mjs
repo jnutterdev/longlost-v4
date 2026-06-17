@@ -1,5 +1,12 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { execSync } from 'child_process';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const { contentTypes: CONTENT_TYPES } = JSON.parse(
+  readFileSync(join(__dirname, 'announce.config.json'), 'utf8')
+);
 
 const SITE_URL = process.env.SITE_URL || 'https://longlostforgotten.com';
 const BLUESKY_HANDLE = process.env.BLUESKY_HANDLE;
@@ -7,12 +14,12 @@ const BLUESKY_APP_PASSWORD = process.env.BLUESKY_APP_PASSWORD;
 const MASTODON_INSTANCE = process.env.MASTODON_INSTANCE;
 const MASTODON_ACCESS_TOKEN = process.env.MASTODON_ACCESS_TOKEN;
 
-function getNewPostFiles() {
+function getNewFiles(dir, ext) {
   const output = execSync(
-    'git diff --name-only --diff-filter=A HEAD~1 HEAD -- src/content/posts/',
+    `git diff --name-only --diff-filter=A HEAD~1 HEAD -- ${dir}`,
     { encoding: 'utf8' }
   );
-  return output.trim().split('\n').filter(f => f.endsWith('.md'));
+  return output.trim().split('\n').filter(f => f.endsWith(ext));
 }
 
 function parseFrontmatter(content) {
@@ -22,7 +29,6 @@ function parseFrontmatter(content) {
   let currentKey = null;
   for (const line of match[1].split('\n')) {
     if (/^\s+\S/.test(line) && currentKey) {
-      // indented line — nested value under currentKey
       if (typeof result[currentKey] !== 'object' || result[currentKey] === null) {
         result[currentKey] = {};
       }
@@ -156,48 +162,52 @@ async function postToMastodon(text, image, imageAlt = '') {
 }
 
 async function main() {
-  const newFiles = getNewPostFiles();
-  if (newFiles.length === 0) { console.log('No new posts.'); return; }
+  const allNewFiles = CONTENT_TYPES.flatMap(({ dir, urlPath, excerptField, imageField, ext = '.md' }) =>
+    getNewFiles(dir, ext).map(filePath => ({ filePath, urlPath, excerptField, imageField, dir }))
+  );
 
-  for (const filePath of newFiles) {
+  if (allNewFiles.length === 0) { console.log('No new posts.'); return; }
+
+  for (const { filePath, urlPath, excerptField, imageField, dir } of allNewFiles) {
     const fm = parseFrontmatter(readFileSync(filePath, 'utf8'));
     if (fm.draft === 'true') { console.log(`Skipping draft: ${filePath}`); continue; }
 
-    const slug = filePath.replace('src/content/posts/', '').replace('.md', '').toLowerCase();
-    const postUrl = `${SITE_URL}/posts/${slug}`;
-    const text = `${fm.title}\n\n${fm.excerpt}\n\n${postUrl}`;
+    const slug = filePath.replace(dir, '').replace(/\.(md|mdx)$/, '').toLowerCase();
+    const postUrl = `${SITE_URL}/${urlPath}/${slug}`;
+    const text = `${fm.title}\n\n${fm[excerptField]}\n\n${postUrl}`;
 
-    const imageSrc = fm.image?.src ?? (typeof fm.image === 'string' ? fm.image : null);
-    const imageAlt = fm.image?.alt || fm.title;
+    const rawImage = fm[imageField];
+    const imageSrc = rawImage?.src ?? (typeof rawImage === 'string' ? rawImage : null);
+    const imageAlt = rawImage?.alt || fm.title;
     const image = imageSrc ? await fetchImage(`${SITE_URL}${imageSrc}`) : null;
     if (imageSrc && !image) console.warn('Could not fetch post image, posting without it.');
 
     console.log(`Announcing: ${fm.title}`);
-    let discussionUrl = null;
+    let blueskyUrl = null;
+    let mastodonUrl = null;
 
     if (BLUESKY_HANDLE && BLUESKY_APP_PASSWORD) {
       try {
-        discussionUrl = await postToBluesky(text, postUrl, image, imageAlt);
-        console.log(`Bluesky: ${discussionUrl}`);
+        blueskyUrl = await postToBluesky(text, postUrl, image, imageAlt);
+        console.log(`Bluesky: ${blueskyUrl}`);
       } catch (err) { console.error('Bluesky error:', err.message); }
     }
 
     if (MASTODON_INSTANCE && MASTODON_ACCESS_TOKEN) {
       try {
-        const mastodonUrl = await postToMastodon(text, image, imageAlt);
+        mastodonUrl = await postToMastodon(text, image, imageAlt);
         console.log(`Mastodon: ${mastodonUrl}`);
-        if (!discussionUrl) discussionUrl = mastodonUrl;
       } catch (err) { console.error('Mastodon error:', err.message); }
     }
 
-    if (discussionUrl) {
-      updateFrontmatterField(filePath, 'discussionUrl', discussionUrl);
-    }
+    if (blueskyUrl) updateFrontmatterField(filePath, 'blueskyUrl', blueskyUrl);
+    if (mastodonUrl) updateFrontmatterField(filePath, 'mastodonUrl', mastodonUrl);
   }
 
   execSync('git config user.name "github-actions[bot]"');
   execSync('git config user.email "github-actions[bot]@users.noreply.github.com"');
-  execSync('git add src/content/posts/');
+  const contentDirs = CONTENT_TYPES.map(c => c.dir).join(' ');
+  execSync(`git add ${contentDirs}`);
   try {
     execSync('git diff --staged --quiet');
     console.log('Nothing to commit.');

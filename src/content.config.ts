@@ -12,7 +12,8 @@ const posts = defineCollection({
     image: z.string().optional(),
     featured: z.boolean().optional().default(false),
     draft: z.boolean().optional().default(false),
-    discussionUrl: z.string().optional(),
+    blueskyUrl: z.string().optional(),
+    mastodonUrl: z.string().optional(),
   }),
 });
 

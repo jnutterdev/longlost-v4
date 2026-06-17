@@ -6,7 +6,7 @@ readTime: 1 min
 excerpt: 'The other day I went to Book Nook, a local chain that sells used books among other things. I was looking through the sci-fi section and stumbled across Arachne by Lisa Mason. Totally not familiar with her or her books, but the description says, "Imagine ''L. A. Law'' scripted by William Gibson...'
 image: /1173049-392930115.jpg
 featured: true
-discussionUrl: 'https://bsky.app/profile/longlostforgotten.com/post/3mneji6b6ss2k'
+blueskyUrl: 'https://bsky.app/profile/longlostforgotten.com/post/3mneji6b6ss2k'
 draft: false
 ---
 
