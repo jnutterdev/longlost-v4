@@ -2,7 +2,7 @@
 title: Windows faring
 date: 2016-02-15T09:39:00-05:00
 excerpt: |
-  So I listen to the podcast <a href="ShopTalkshow.com">ShopTalk</a> with Dave Rupert, and Chris Coyier, pretty much every day on my way to work. Last Friday, I was going back over some previous episodes that I missed, and landed on one where Dave mentioned switching to a Windows machine to try development on.
+  So I listen to the podcast ShopTalkwith Dave Rupert, and Chris Coyier, pretty much every day on my way to work
 tag:
   - work
   - career

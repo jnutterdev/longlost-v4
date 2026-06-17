@@ -1,5 +1,5 @@
 ---
-title: New site, new design, new format
+title: New site, new design, new
 date: 2020-05-17T20:16:00-04:00
 tag:
   - style

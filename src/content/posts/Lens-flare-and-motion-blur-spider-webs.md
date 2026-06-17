@@ -1,5 +1,5 @@
 ---
-title: Lens flare and motion blur spider webs
+title: Lens flare and motion blur
 date: 2026-05-30T00:11:06.659Z
 tag: take
 readTime: 1 min

@@ -1,5 +1,5 @@
 ---
-title: 'Empty theater, endless popcorn'
+title: Empty theater, endless
 date: 2026-06-03T03:43:04.565Z
 tag: take
 readTime: 1 min

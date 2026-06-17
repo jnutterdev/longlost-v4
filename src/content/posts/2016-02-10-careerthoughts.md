@@ -2,7 +2,7 @@
 title: Thinking and planning
 date: 2016-02-10T09:41:00-05:00
 excerpt: |
-  I've been thinking a lot more about what to do going forward with my career. Currently, my pursuits have been a bit, well I wouldn't really say "aimless", but just less focused than they could be. For example, I read a lot about my current work's departments and what they do; what tools they use; what they do day-in and day-out. When I read about something new, or I haven't had much experience with, I'll set out on my own to learn what it is and how to use it.
+  I've been thinking a lot more about what to do going forward with my career. Currently, my pursuits have been a bit, well I wouldn't really say "aimless"
 tag:
   - work
   - career
