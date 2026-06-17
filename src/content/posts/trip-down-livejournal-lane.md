@@ -1,5 +1,5 @@
 ---
-title: trip down livejournal lane
+title: Trip down livejournal lane
 date: 2026-06-17T00:00:00.000Z
 excerpt: Today I spent a good portion of the day getting this website setup some more.
 tag:
