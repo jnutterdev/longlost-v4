@@ -32,7 +32,7 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
           return (
             <li class="archive-row">
               <span class="archive-date">{dateStr}</span>
-              <a href={`/posts/${post.slug}`} class="archive-title">{post.data.title}</a>
+              <a href={`/posts/${post.id}`} class="archive-title">{post.data.title}</a>
               {primaryTag && <span class="archive-tag">{primaryTag}</span>}
             </li>
           );

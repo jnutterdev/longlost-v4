@@ -24,7 +24,7 @@ const posts = allPosts
     {posts.map(post => (
       <PostCard
         title={post.data.title}
-        slug={post.slug}
+        slug={post.id}
         date={post.data.date}
         excerpt={post.data.excerpt}
         tag={post.data.tag}
