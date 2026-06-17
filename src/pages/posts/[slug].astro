@@ -26,12 +26,10 @@ const formatted = new Date(post.data.date).toLocaleDateString('en-US', {
     <header class="post-header">
       <p class="post-meta">
         <time datetime={post.data.date}>{formatted}</time>
-        {post.data.tags && post.data.tags.length > 0 && (
+        {post.data.tag && (
           <>
             <span class="meta-sep">·</span>
-            {post.data.tags.map(tag => (
-              <span class="post-tag">{tag}</span>
-            ))}
+            <span class="post-tag">{post.data.tag}</span>
           </>
         )}
       </p>

@@ -158,8 +158,12 @@ type Posts implements Node & Document {
   title: String!
   date: String!
   excerpt: String
-  tags: [String]
+  tag: String
+  readTime: String
+  image: String
+  featured: Boolean
   draft: Boolean
+  discussionUrl: String
   body: JSON
   id: ID!
   _sys: SystemInfo!
@@ -183,8 +187,12 @@ input PostsFilter {
   title: StringFilter
   date: DatetimeFilter
   excerpt: StringFilter
-  tags: StringFilter
+  tag: StringFilter
+  readTime: StringFilter
+  image: ImageFilter
+  featured: BooleanFilter
   draft: BooleanFilter
+  discussionUrl: StringFilter
   body: RichTextFilter
 }
 
@@ -241,8 +249,12 @@ input PostsMutation {
   title: String
   date: String
   excerpt: String
-  tags: [String]
+  tag: String
+  readTime: String
+  image: String
+  featured: Boolean
   draft: Boolean
+  discussionUrl: String
   body: JSON
 }
 

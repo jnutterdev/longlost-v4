@@ -27,8 +27,12 @@ export const PostsPartsFragmentDoc = gql`
   title
   date
   excerpt
-  tags
+  tag
+  readTime
+  image
+  featured
   draft
+  discussionUrl
   body
 }
     `;

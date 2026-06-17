@@ -2,8 +2,18 @@
 import Base from '../layouts/Base.astro';
 import { client } from '../../tina/__generated__/client';
 import AboutEditor from '../components/AboutEditor';
+import aboutJson from '../content/about.json';
 
-const result = await client.queries.about({ relativePath: 'about.json' });
+let result: Awaited<ReturnType<typeof client.queries.about>>;
+try {
+  result = await client.queries.about({ relativePath: 'about.json' });
+} catch {
+  result = {
+    data: { about: aboutJson as any },
+    query: '',
+    variables: { relativePath: 'about.json' },
+  };
+}
 ---
 
 <Base title="about">

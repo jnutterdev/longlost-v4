@@ -18,7 +18,11 @@ fragment PostsParts on Posts {
   title
   date
   excerpt
-  tags
+  tag
+  readTime
+  image
+  featured
   draft
+  discussionUrl
   body
 }
