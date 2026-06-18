@@ -26,6 +26,7 @@ const nav = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="fediverse:creator" content="@longlostforgotten@mastodon.social">
     <title>{title === 'long lost forgotten' ? title : `${title} · long lost forgotten`}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
@@ -33,7 +34,7 @@ const nav = [
   <body>
     <div class="site-wrap">
       <header class="site-header">
-        <a href="/" class="site-title">long lost forgotten</a>
+          <a rel="me" href="/" class="site-title">longlostforgotten</a>
         <nav class="site-nav" aria-label="Main navigation">
           {nav.map(({ label, href }) => {
             const isActive = href === '/'
