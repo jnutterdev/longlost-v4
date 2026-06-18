@@ -14,19 +14,6 @@ So earlier today, I mentioned [going through all my livejournal posts ](https://
 
 This youtube music list is about as close as I can get it. There's some things that were channel streams or local artist's music that I can no longer find: [https://music.youtube.com/playlist?list=PLUFPV5LrzDgHreLLm\_HgVyhMn6DGkfck5\&si=GyHN-K0bxaLhI9-J](https://music.youtube.com/playlist?list=PLUFPV5LrzDgHreLLm_HgVyhMn6DGkfck5\&si=GyHN-K0bxaLhI9-J)
 
-|   |   |   |
-| - | - | - |
-
-|   |   |   |
-| - | - | - |
-|   |   |   |
-|   |   |   |
-|   |   |   |
-|   |   |   |
-|   |   |   |
-|   |   |   |
-|   |   |   |
-
 converge - jane doe
 
 5ive - burning season
