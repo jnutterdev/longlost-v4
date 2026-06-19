@@ -1,23 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
-import { client } from '../../tina/__generated__/client';
-import AboutEditor from '../components/AboutEditor';
-import aboutJson from '../content/about.json';
+import about from '../content/about.json';
 
-let result: Awaited<ReturnType<typeof client.queries.about>>;
-try {
-  result = await client.queries.about({ relativePath: 'about.json' });
-} catch {
-  result = {
-    data: { about: aboutJson as any },
-    query: '',
-    variables: { relativePath: 'about.json' },
-  };
-}
+const bioParagraphs = about.bio
+  ? about.bio.split(/\n\n+/).filter(p => p.trim())
+  : [];
 ---
 
 <Base title="about">
-  <AboutEditor {...result} client:tina />
+  {about.avatar
+    ? <img class="about-avatar" src={about.avatar} alt={about.avatarAlt ?? about.name} />
+    : <div class="about-avatar" aria-hidden="true">j</div>
+  }
+  <p class="about-name">{about.name}</p>
+  <p class="about-handle">{about.handle} · {about.location}</p>
+  <div class="about-body">
+    {bioParagraphs.map(p => <p>{p}</p>)}
+  </div>
+  <nav class="about-links" aria-label="External links">
+    {about.links?.map(link => (
+      <a href={link.url ?? '#'} class="about-link">{link.label}</a>
+    ))}
+  </nav>
 </Base>
 
 <style is:global>
