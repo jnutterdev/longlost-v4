@@ -3,7 +3,7 @@ title: 'Dark Matter, light reading'
 date: 2026-06-19T00:00:00.000Z
 excerpt: Lately I've been trying to disconnect from screens whenever I can. It's been great so far — I've mostly filled that downtime with reading.
 readTime: 1 min
-draft: true
+draft: false
 currentMusic: Valance Drakes - Not Taking This Gratitude For Granted
 currentMood: "sleepy \U0001F971"
 ---
