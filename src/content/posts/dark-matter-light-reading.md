@@ -2,6 +2,9 @@
 title: 'Dark Matter, light reading'
 date: 2026-06-19T00:00:00.000Z
 excerpt: Lately I've been trying to disconnect from screens whenever I can. It's been great so far — I've mostly filled that downtime with reading.
+tag:
+  - reading
+  - downtime
 readTime: 1 min
 draft: false
 blueskyUrl: 'https://bsky.app/profile/longlostforgotten.com/post/3monjpisysw2m'
