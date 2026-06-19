@@ -23,8 +23,7 @@ var config_default = defineConfig({
         match: { include: "home" },
         format: "json",
         ui: {
-          allowedActions: { create: false, delete: false },
-          router: () => "/"
+          allowedActions: { create: false, delete: false }
         },
         fields: [
           {
@@ -53,8 +52,7 @@ var config_default = defineConfig({
         match: { include: "about" },
         format: "json",
         ui: {
-          allowedActions: { create: false, delete: false },
-          router: () => "/about"
+          allowedActions: { create: false, delete: false }
         },
         fields: [
           { name: "avatar", label: "Profile Image", type: "image" },
@@ -62,7 +60,7 @@ var config_default = defineConfig({
           { name: "name", label: "Name", type: "string", required: true },
           { name: "handle", label: "Handle", type: "string" },
           { name: "location", label: "Location", type: "string" },
-          { name: "bio", label: "Bio", type: "rich-text" },
+          { name: "bio", label: "Bio", type: "string", ui: { component: "textarea" } },
           {
             name: "links",
             label: "Links",

@@ -27,7 +27,6 @@ export default defineConfig({
         format: 'json',
         ui: {
           allowedActions: { create: false, delete: false },
-          router: () => '/',
         },
         fields: [
           {
@@ -57,7 +56,6 @@ export default defineConfig({
         format: 'json',
         ui: {
           allowedActions: { create: false, delete: false },
-          router: () => '/about',
         },
         fields: [
           { name: 'avatar', label: 'Profile Image', type: 'image' },

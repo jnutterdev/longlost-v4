@@ -250,7 +250,7 @@ export type About = Node & Document & {
   name: Scalars['String']['output'];
   handle?: Maybe<Scalars['String']['output']>;
   location?: Maybe<Scalars['String']['output']>;
-  bio?: Maybe<Scalars['JSON']['output']>;
+  bio?: Maybe<Scalars['String']['output']>;
   links?: Maybe<Array<Maybe<AboutLinks>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
@@ -264,12 +264,6 @@ export type ImageFilter = {
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type RichTextFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export type AboutLinksFilter = {
   label?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
@@ -281,7 +275,7 @@ export type AboutFilter = {
   name?: InputMaybe<StringFilter>;
   handle?: InputMaybe<StringFilter>;
   location?: InputMaybe<StringFilter>;
-  bio?: InputMaybe<RichTextFilter>;
+  bio?: InputMaybe<StringFilter>;
   links?: InputMaybe<AboutLinksFilter>;
 };
 
@@ -328,6 +322,12 @@ export type DatetimeFilter = {
 
 export type BooleanFilter = {
   eq?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type RichTextFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -474,7 +474,7 @@ export type AboutMutation = {
   name?: InputMaybe<Scalars['String']['input']>;
   handle?: InputMaybe<Scalars['String']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
-  bio?: InputMaybe<Scalars['JSON']['input']>;
+  bio?: InputMaybe<Scalars['String']['input']>;
   links?: InputMaybe<Array<InputMaybe<AboutLinksMutation>>>;
 };
 
@@ -496,7 +496,7 @@ export type PostsMutation = {
 
 export type HomePartsFragment = { __typename: 'Home', tagline?: string | null, headline?: string | null, desc?: string | null };
 
-export type AboutPartsFragment = { __typename: 'About', avatar?: string | null, avatarAlt?: string | null, name: string, handle?: string | null, location?: string | null, bio?: any | null, links?: Array<{ __typename: 'AboutLinks', label?: string | null, url?: string | null } | null> | null };
+export type AboutPartsFragment = { __typename: 'About', avatar?: string | null, avatarAlt?: string | null, name: string, handle?: string | null, location?: string | null, bio?: string | null, links?: Array<{ __typename: 'AboutLinks', label?: string | null, url?: string | null } | null> | null };
 
 export type PostsPartsFragment = { __typename: 'Posts', title: string, date: string, excerpt?: string | null, tag?: Array<string | null> | null, readTime?: string | null, image?: string | null, featured?: boolean | null, draft?: boolean | null, blueskyUrl?: string | null, mastodonUrl?: string | null, currentMusic?: string | null, currentMood?: string | null, body?: any | null };
 
@@ -524,7 +524,7 @@ export type AboutQueryVariables = Exact<{
 }>;
 
 
-export type AboutQuery = { __typename?: 'Query', about: { __typename: 'About', id: string, avatar?: string | null, avatarAlt?: string | null, name: string, handle?: string | null, location?: string | null, bio?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, links?: Array<{ __typename: 'AboutLinks', label?: string | null, url?: string | null } | null> | null } };
+export type AboutQuery = { __typename?: 'Query', about: { __typename: 'About', id: string, avatar?: string | null, avatarAlt?: string | null, name: string, handle?: string | null, location?: string | null, bio?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, links?: Array<{ __typename: 'AboutLinks', label?: string | null, url?: string | null } | null> | null } };
 
 export type AboutConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -536,7 +536,7 @@ export type AboutConnectionQueryVariables = Exact<{
 }>;
 
 
-export type AboutConnectionQuery = { __typename?: 'Query', aboutConnection: { __typename?: 'AboutConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AboutConnectionEdges', cursor: string, node?: { __typename: 'About', id: string, avatar?: string | null, avatarAlt?: string | null, name: string, handle?: string | null, location?: string | null, bio?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, links?: Array<{ __typename: 'AboutLinks', label?: string | null, url?: string | null } | null> | null } | null } | null> | null } };
+export type AboutConnectionQuery = { __typename?: 'Query', aboutConnection: { __typename?: 'AboutConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AboutConnectionEdges', cursor: string, node?: { __typename: 'About', id: string, avatar?: string | null, avatarAlt?: string | null, name: string, handle?: string | null, location?: string | null, bio?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, links?: Array<{ __typename: 'AboutLinks', label?: string | null, url?: string | null } | null> | null } | null } | null> | null } };
 
 export type PostsQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];

@@ -137,7 +137,7 @@ type About implements Node & Document {
   name: String!
   handle: String
   location: String
-  bio: JSON
+  bio: String
   links: [AboutLinks]
   id: ID!
   _sys: SystemInfo!
@@ -151,12 +151,6 @@ input ImageFilter {
   in: [String]
 }
 
-input RichTextFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-}
-
 input AboutLinksFilter {
   label: StringFilter
   url: StringFilter
@@ -168,7 +162,7 @@ input AboutFilter {
   name: StringFilter
   handle: StringFilter
   location: StringFilter
-  bio: RichTextFilter
+  bio: StringFilter
   links: AboutLinksFilter
 }
 
@@ -212,6 +206,12 @@ input DatetimeFilter {
 
 input BooleanFilter {
   eq: Boolean
+  exists: Boolean
+}
+
+input RichTextFilter {
+  startsWith: String
+  eq: String
   exists: Boolean
 }
 
@@ -286,7 +286,7 @@ input AboutMutation {
   name: String
   handle: String
   location: String
-  bio: JSON
+  bio: String
   links: [AboutLinksMutation]
 }
 
