@@ -142,6 +142,7 @@ const formatted = new Date(post.data.date).toLocaleDateString('en-US', {
     font-size: 15px;
     color: var(--subtext1);
     line-height: 1.8;
+    display: flow-root;
   }
 
   .post-body :global(p) {
@@ -221,6 +222,14 @@ const formatted = new Date(post.data.date).toLocaleDateString('en-US', {
     border: none;
     border-top: 1px solid var(--surface0);
     margin: 2rem 0;
+  }
+
+  .post-body :global(img) {
+    float: right;
+    display: inline;
+    max-width: 150px;
+    margin: 0.25rem 0 0.75rem 1.25rem;
+    clear: right;
   }
 
   .post-vibes {
