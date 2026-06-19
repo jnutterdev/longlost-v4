@@ -75,7 +75,7 @@ async function fetchImage(imageUrl) {
   }
 }
 
-async function postToBluesky(text, linkUrl, image, imageAlt = '') {
+async function postToBluesky(text, linkUrl, image) {
   const sessionRes = await fetch('https://bsky.social/xrpc/com.atproto.server.createSession', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -98,7 +98,8 @@ async function postToBluesky(text, linkUrl, image, imageAlt = '') {
     createdAt: new Date().toISOString(),
   };
 
-  const BLUESKY_MAX_IMAGE_BYTES = 2_000_000;
+  const BLUESKY_MAX_IMAGE_BYTES = 1_000_000;
+  let thumb = null;
   if (image && image.buffer.byteLength <= BLUESKY_MAX_IMAGE_BYTES) {
     const blobRes = await fetch('https://bsky.social/xrpc/com.atproto.repo.uploadBlob', {
       method: 'POST',
@@ -107,16 +108,23 @@ async function postToBluesky(text, linkUrl, image, imageAlt = '') {
     });
     if (blobRes.ok) {
       const { blob } = await blobRes.json();
-      record.embed = {
-        $type: 'app.bsky.embed.images',
-        images: [{ image: blob, alt: imageAlt }],
-      };
+      thumb = blob;
     } else {
       console.warn('Bluesky image upload failed, posting without image.');
     }
   } else if (image) {
-    console.warn(`Image too large for Bluesky (${(image.buffer.byteLength / 1_000_000).toFixed(1)}MB, max 2MB), posting without image.`);
+    console.warn(`Image too large for Bluesky thumb (${(image.buffer.byteLength / 1_000_000).toFixed(1)}MB, max 1MB), posting without image.`);
   }
+
+  record.embed = {
+    $type: 'app.bsky.embed.external',
+    external: {
+      uri: linkUrl,
+      title: text.split('\n')[0],
+      description: text.split('\n\n')[1] || '',
+      ...(thumb ? { thumb } : {}),
+    },
+  };
 
   const postRes = await fetch('https://bsky.social/xrpc/com.atproto.repo.createRecord', {
     method: 'POST',
@@ -181,8 +189,9 @@ async function main() {
     const rawImage = fm[imageField];
     const imageSrc = rawImage?.src ?? (typeof rawImage === 'string' ? rawImage : null);
     const imageAlt = rawImage?.alt || fm.title;
-    const image = imageSrc ? await fetchImage(`${SITE_URL}${imageSrc}`) : null;
-    if (imageSrc && !image) console.warn('Could not fetch post image, posting without it.');
+    const imageUrl = `${SITE_URL}${imageSrc ?? '/images/social_basecard.png'}`;
+    const image = await fetchImage(imageUrl);
+    if (!image) console.warn('Could not fetch post image, posting without it.');
 
     console.log(`Announcing: ${fm.title}`);
     let blueskyUrl = null;
@@ -190,7 +199,7 @@ async function main() {
 
     if (BLUESKY_HANDLE && BLUESKY_APP_PASSWORD) {
       try {
-        blueskyUrl = await postToBluesky(text, postUrl, image, imageAlt);
+        blueskyUrl = await postToBluesky(text, postUrl, image);
         console.log(`Bluesky: ${blueskyUrl}`);
       } catch (err) { console.error('Bluesky error:', err.message); }
     }
