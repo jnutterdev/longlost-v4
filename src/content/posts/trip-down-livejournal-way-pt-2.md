@@ -2,6 +2,9 @@
 title: Trip down livejournal way pt. 2
 date: 2026-06-17T00:00:00.000Z
 excerpt: 'So earlier today, I mentioned going through all my livejournal posts and porting them over here.'
+tag:
+  - music
+  - memories
 readTime: 1 min
 draft: false
 blueskyUrl: 'https://bsky.app/profile/longlostforgotten.com/post/3mojeo6r6ht2t'
