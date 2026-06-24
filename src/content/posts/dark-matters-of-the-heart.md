@@ -6,7 +6,7 @@ tag:
   - reading
   - thoughts
 readTime: 1 min
-draft: true
+draft: false
 currentMusic: Saetia - Tendrils
 currentMood: "Accomplished \U0001F4AA"
 ---
