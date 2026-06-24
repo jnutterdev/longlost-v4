@@ -18,7 +18,7 @@ const TRIGGER_SHA = process.env.TRIGGER_SHA;
 function getNewFiles(dir, ext) {
   const range = TRIGGER_SHA ? `${TRIGGER_SHA}^ ${TRIGGER_SHA}` : 'HEAD~1 HEAD';
   const output = execSync(
-    `git diff --name-only --diff-filter=A ${range} -- ${dir}`,
+    `git diff --name-only --diff-filter=AM ${range} -- ${dir}`,
     { encoding: 'utf8' }
   );
   return output.trim().split('\n').filter(f => f.endsWith(ext));
@@ -181,6 +181,7 @@ async function main() {
   for (const { filePath, urlPath, excerptField, imageField, dir } of allNewFiles) {
     const fm = parseFrontmatter(readFileSync(filePath, 'utf8'));
     if (fm.draft === 'true') { console.log(`Skipping draft: ${filePath}`); continue; }
+    if (fm.announced === 'true') { console.log(`Already announced: ${filePath}`); continue; }
 
     const slug = filePath.replace(dir, '').replace(/\.(md|mdx)$/, '').toLowerCase();
     const postUrl = `${SITE_URL}/${urlPath}/${slug}`;
@@ -213,6 +214,7 @@ async function main() {
 
     if (blueskyUrl) updateFrontmatterField(filePath, 'blueskyUrl', blueskyUrl);
     if (mastodonUrl) updateFrontmatterField(filePath, 'mastodonUrl', mastodonUrl);
+    updateFrontmatterField(filePath, 'announced', 'true');
   }
 
   execSync('git config user.name "github-actions[bot]"');
