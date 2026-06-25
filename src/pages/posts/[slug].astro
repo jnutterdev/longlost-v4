@@ -21,7 +21,7 @@ const formatted = new Date(post.data.date).toLocaleDateString('en-US', {
 });
 ---
 
-<Base title={post.data.title} description={post.data.excerpt} image={post.data.image}>
+<Base title={post.data.title} description={post.data.excerpt} image={`/og/${post.id}.png`}>
   <article>
     <header class="post-header">
       <p class="post-meta">
