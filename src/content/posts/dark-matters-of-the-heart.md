@@ -9,6 +9,9 @@ readTime: 1 min
 draft: false
 currentMusic: Saetia - Tendrils
 currentMood: "Accomplished \U0001F4AA"
+blueskyUrl: https://bsky.app/profile/longlostforgotten.com/post/3moz4bsvghn23
+mastodonUrl: https://mastodon.social/@longlostforgotten/116803266168326221
+announced: true
 ---
 
 Today was a pretty good day. I managed to get a lot of stuff done around the house, went bowling with the family, and then got some reading in. I just finished reading the book Dark Matter. I liked this book a lot. I don't want to give anything away because part of the fun of it for me was all the twists. But someone described it as a popcorn action thriller that’s a love story, and wrapped in science fiction. I’d say that’s a fair assessment and I definitely recommend giving it a chance if you like those themes rolled together. It really had me guessing what was going to happen next, and I can’t think of a moment where it seemed too cliché, which is a good thing. It was also a fairly quick, fast paced, read so it shouldn’t take long to get through it. At some point, I’ll try to watch the tv show to see how it lives up to it.
