@@ -9,7 +9,7 @@ tag:
   - books
 readTime: 1 min
 image: /images/GravityFails-1628300108.jpg
-draft: true
+draft: false
 currentMusic: Skinny Puppy - Hexonxonx
 currentMood: "Good \U0001F60E"
 ---
