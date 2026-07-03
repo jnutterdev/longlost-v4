@@ -1,4 +1,18 @@
 @import url('https://fonts.bunny.net/css?family=ibm-plex-mono:400,500|ibm-plex-sans:400,500&display=swap');
+@import './themes/blacksky.css';
+@import './themes/bluesky.css';
+@import './themes/fujocoded.css';
+@import './themes/germ.css';
+@import './themes/kandake.css';
+@import './themes/laelaps.css';
+@import './themes/ngerakines.css';
+@import './themes/northsky.css';
+@import './themes/pckt.css';
+@import './themes/plyrfm.css';
+@import './themes/reddwarf.css';
+@import './themes/semble.css';
+@import './themes/spark.css';
+@import './themes/tealfm.css';
 
 /* ─── Catppuccin Mocha tokens ─────────────────────────────── */
 :root {
@@ -36,6 +50,34 @@
 
   /* ─── Spacing ─── */
   --content-width: 680px;
+
+  /* ─── Themeable tokens ─── */
+  --body-gradient:
+    radial-gradient(ellipse 70% 50% at 15% 0%, rgba(203, 166, 247, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 90% 100%, rgba(180, 190, 254, 0.05) 0%, transparent 65%);
+  --tag-bg: rgba(203, 166, 247, 0.08);
+  --tag-border: rgba(203, 166, 247, 0.2);
+}
+
+/* ─── Theme adapter ───────────────────────────────────────── */
+/* Maps --theme-* tokens (used by all theme files) to the    */
+/* Catppuccin-named vars this site's components reference.   */
+[data-theme] {
+  --base:     var(--theme-bg);
+  --text:     var(--theme-fg);
+  --surface0: var(--theme-border);
+  --surface1: var(--theme-surface);
+  --subtext0: var(--theme-muted);
+  --overlay0: var(--theme-muted);
+  --overlay1: var(--theme-muted);
+  --mauve:    var(--theme-accent);
+  --lavender: var(--theme-accent);
+
+  --body-gradient:
+    radial-gradient(ellipse 70% 50% at 15% 0%, color-mix(in srgb, var(--theme-accent) 9%, transparent) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 90% 100%, color-mix(in srgb, var(--theme-accent) 5%, transparent) 0%, transparent 65%);
+  --tag-bg:     color-mix(in srgb, var(--theme-accent) 8%, transparent);
+  --tag-border: color-mix(in srgb, var(--theme-accent) 20%, transparent);
 }
 
 /* ─── Reset ──────────────────────────────────────────────── */
@@ -53,9 +95,7 @@ html {
 
 body {
   background-color: var(--base);
-  background-image:
-    radial-gradient(ellipse 70% 50% at 15% 0%, rgba(203, 166, 247, 0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 90% 100%, rgba(180, 190, 254, 0.05) 0%, transparent 65%);
+  background-image: var(--body-gradient);
   background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-sans);
