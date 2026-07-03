@@ -5,25 +5,30 @@ import { getCollection } from 'astro:content';
 const posts = await getCollection('posts', p => !p.data.draft);
 const pages = Object.fromEntries(posts.map(p => [p.id, p.data]));
 
-// When src/assets/og-frame.png exists, it's used as the card background.
-// The frame should be 1200×630px and include the header labels
-// ("longlostforgotten.com" top-left, "TRANSMISSION_LOG" top-right)
-// with the title/description area clear below ~70px from the top.
-const hasFrame = existsSync('./src/assets/og-frame.png');
+// When public/images/og-frame.png exists, it's used as the card background.
+// The frame should be 1200×630px. The title/description start at y≈80px,
+// so keep the top ~70px clear of content and put any bottom decoration below y≈450px.
+const FRAME_PATH = './public/images/og-frame.png';
+const hasFrame = existsSync(FRAME_PATH);
+
+function buildDescription(page: { excerpt?: string; tag?: string | string[] }): string {
+  const excerpt = page.excerpt ?? 'longlostforgotten.com · a personal log';
+  const tags = page.tag
+    ? (Array.isArray(page.tag) ? page.tag : [page.tag])
+    : [];
+  return tags.length ? `${excerpt}\n\n· ${tags.join('  · ')}` : excerpt;
+}
 
 export const { getStaticPaths, GET } = await OGImageRoute({
   param: 'slug',
   pages,
   getImageOptions: (_path, page) => ({
     title: page.title,
-    description: page.excerpt ?? 'longlostforgotten.com · a personal log',
+    description: buildDescription(page),
     bgGradient: [[30, 30, 46]],
-    ...(hasFrame ? { bgImage: { path: './src/assets/og-frame.png', fit: 'cover' } } : {}),
-    border: {
-      color: [203, 166, 247],
-      width: 6,
-      side: 'inline-start',
-    },
+    ...(hasFrame ? { bgImage: { path: FRAME_PATH, fit: 'cover' } } : {}),
+    // Border is only visible when there's no frame (bgImage paints over it in draw order)
+    ...(!hasFrame ? { border: { color: [203, 166, 247] as [number, number, number], width: 6, side: 'inline-start' as const } } : {}),
     padding: hasFrame ? 80 : 60,
     font: {
       title: {
