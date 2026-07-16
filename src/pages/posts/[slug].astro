@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import BlueskyComments from '../../components/BlueskyComments.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -79,6 +80,8 @@ const formatted = new Date(post.data.date).toLocaleDateString('en-US', {
         </div>
       </aside>
     )}
+
+    {post.data.blueskyUrl && <BlueskyComments blueskyUrl={post.data.blueskyUrl} />}
 
     <footer class="post-footer">
       <a href="/archive" class="back-link">← archive</a>
