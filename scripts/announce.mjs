@@ -172,13 +172,13 @@ async function postToMastodon(text, image, imageAlt = '') {
 }
 
 async function main() {
-  const allNewFiles = CONTENT_TYPES.flatMap(({ dir, urlPath, excerptField, imageField, ext = '.md' }) =>
-    getNewFiles(dir, ext).map(filePath => ({ filePath, urlPath, excerptField, imageField, dir }))
+  const allNewFiles = CONTENT_TYPES.flatMap(({ dir, urlPath, excerptField, ext = '.md' }) =>
+    getNewFiles(dir, ext).map(filePath => ({ filePath, urlPath, excerptField, dir }))
   );
 
   if (allNewFiles.length === 0) { console.log('No new posts.'); return; }
 
-  for (const { filePath, urlPath, excerptField, imageField, dir } of allNewFiles) {
+  for (const { filePath, urlPath, excerptField, dir } of allNewFiles) {
     const fm = parseFrontmatter(readFileSync(filePath, 'utf8'));
     if (fm.draft === 'true') { console.log(`Skipping draft: ${filePath}`); continue; }
     if (fm.announced === 'true') { console.log(`Already announced: ${filePath}`); continue; }
@@ -187,10 +187,8 @@ async function main() {
     const postUrl = `${SITE_URL}/${urlPath}/${slug}`;
     const text = `${fm.title}\n\n${fm[excerptField]}\n\n${postUrl}`;
 
-    const rawImage = fm[imageField];
-    const imageSrc = rawImage?.src ?? (typeof rawImage === 'string' ? rawImage : null);
-    const imageAlt = rawImage?.alt || fm.title;
-    const imageUrl = `${SITE_URL}${imageSrc ?? '/images/social_basecard.png'}`;
+    const imageAlt = fm.title;
+    const imageUrl = `${SITE_URL}/og/${slug}.png`;
     const image = await fetchImage(imageUrl);
     if (!image) console.warn('Could not fetch post image, posting without it.');
 
