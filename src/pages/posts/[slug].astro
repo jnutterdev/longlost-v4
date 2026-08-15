@@ -149,6 +149,7 @@ const formatted = new Date(post.data.date).toLocaleDateString('en-US', {
   }
 
   .post-body :global(p) {
+    display: flow-root;
     margin-bottom: 1.25rem;
   }
 
@@ -228,11 +229,21 @@ const formatted = new Date(post.data.date).toLocaleDateString('en-US', {
   }
 
   .post-body :global(img) {
-    float: right;
     display: inline;
     max-width: 150px;
-    margin: 0.25rem 0 0.75rem 1.25rem;
+    margin: 0.25rem 0 0.75rem;
+  }
+
+  .post-body :global(img.img-right) {
+    float: right;
     clear: right;
+    margin-left: 1.25rem;
+  }
+
+  .post-body :global(img.img-left) {
+    float: left;
+    clear: left;
+    margin-right: 1.25rem;
   }
 
   .post-vibes {
