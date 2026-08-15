@@ -6,6 +6,9 @@ readTime: 2 min read
 draft: false
 currentMusic: Moy - Ghostware EP
 currentMood: "Excited \U0001F973"
+blueskyUrl: https://bsky.app/profile/longlostforgotten.com/post/3mt4uzavikx2b
+mastodonUrl: https://mastodon.social/@longlostforgotten/117099992333236540
+announced: true
 ---
 
 This year is shaping up to be pretty nice for movies, tv, etc. Here's a rundown of everything I'm excited for.
