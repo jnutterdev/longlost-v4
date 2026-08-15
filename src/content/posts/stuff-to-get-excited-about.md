@@ -1,14 +1,19 @@
 ---
+announced: true
 title: Stuff to get excited about
 date: 2026-08-15T00:00:00.000Z
 excerpt: 'This year is shaping up to be pretty nice for movies, tv, etc. Here''s a rundown of everything I''m excited for. '
+tag:
+  - movies
+  - cyberpunk
+  - sci-fi
+  - tv
 readTime: 2 min read
 draft: false
+blueskyUrl: 'https://bsky.app/profile/longlostforgotten.com/post/3mt4uzavikx2b'
+mastodonUrl: 'https://mastodon.social/@longlostforgotten/117099992333236540'
 currentMusic: Moy - Ghostware EP
 currentMood: "Excited \U0001F973"
-blueskyUrl: https://bsky.app/profile/longlostforgotten.com/post/3mt4uzavikx2b
-mastodonUrl: https://mastodon.social/@longlostforgotten/117099992333236540
-announced: true
 ---
 
 This year is shaping up to be pretty nice for movies, tv, etc. Here's a rundown of everything I'm excited for.
@@ -25,4 +30,4 @@ For movies, we've got **Hot Spot** ![](/images/HOTSPOT_IG_POSTER.jpg)which I thi
 
 \*\*Klara and the Sun\*\*![](/images/Klara_and_the_Sun_\(film\)_poster.jpg)this is the newest film by Taika Watiti and is based off of a book series by Japanese-British author, Kazuo Ishiguro. “In a dystopian future where technological advances in genetic engineering have divided humans into strict, isolated social classes, an obsolete companion android named Klara tries to bond with Josie, a sick girl for whom she was purchased.”
 
-There's probably more that I'm forgetting, but I'll keep this short for now. Next post will cover the upcoming games and other media. 
+There's probably more that I'm forgetting, but I'll keep this short for now. Next post will cover the upcoming games and other media.
